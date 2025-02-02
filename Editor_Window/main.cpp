@@ -3,8 +3,11 @@
 
 #include "framework.h"
 #include "Editor_Window.h"
+#include "..//MyEngine_Source/MyEnApplication.h"
 
 #define MAX_LOADSTRING 100
+
+Application app;
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
@@ -17,15 +20,15 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance,           // ! 프로그램의 인스턴스 핸들. 핸들: 프로그램이 점유한 메모리에만 접근하도록 붙는 식별헤더?
+                     _In_opt_ HINSTANCE hPrevInstance,    // ! 바로 앞에 실행된 현재 프로그램의 인스턴스 핸들. 없으면 NULL.
+                     _In_ LPWSTR    lpCmdLine,            // ! 명령행으로 입력된 프로그램 인수
+                     _In_ int       nCmdShow)             // ! 프로그램이 실행될 형태. (모양정보 등...)
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // 깃헙텥
+    app.test();
 
     // TODO: 여기에 코드를 입력합니다.
 
@@ -44,7 +47,34 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
+
+    // getmessage는 메시지가 있을 때만 반응함
+    // peekmessage는 메시지 없을 때도 동작하게 구현 가능
+    while (true) {
+        if(PeekMessage(&msg,nullptr,0,0,PM_REMOVE)){
+            if (msg.message == WM_QUIT) // 종료 메시지일 경우 반복문을 나간다.
+                break;
+
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) // 메시지 있을경우 getmessage와 같이 동작
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+
+            
+        }
+        else {//메시지가 없을 경우 동작부분
+            
+        }
+    }
+
+
+
+
+
+
     // 기본 메시지 루프입니다:
+    /*
     while (GetMessage(&msg, nullptr, 0, 0))
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -53,7 +83,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
     }
-
+    */
     return (int) msg.wParam;
 }
 
@@ -123,6 +153,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+
+
+
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -144,11 +178,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+    
+    
     case WM_PAINT:
-        {
+        {   
+            
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
+            BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+
+
             EndPaint(hWnd, &ps);
         }
         break;
