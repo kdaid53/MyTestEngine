@@ -14,9 +14,22 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CommonIncludes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyEnApplication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyGameobject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyInput.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MySceneManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyTime.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)MyEnApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyEntity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyGameobject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyInput.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MySceneManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyTime.cpp" />
   </ItemGroup>
 </Project>
