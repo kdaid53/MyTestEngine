@@ -2,26 +2,22 @@
 #include "..\\MyEngine_Source\\MyScene.h"
 
 namespace kim {
-	class PlayScene : public Scene
+	class TitleScene : public Scene
 	{
 	public:
-		PlayScene();
-		~PlayScene();
+
+		TitleScene();
+		~TitleScene();
 
 		void Initialize() override;
 		void Update() override;
 		void LateUpdate() override;
-		void Render(HDC hdc)override;
+		void Render(HDC hdc) override;
 
 		void OnLoad() override;
 		void OnExit() override;
 
 
-	private:
-		class Player* player;
-		class StaticObject* background;
-
 	};
 }
-
 

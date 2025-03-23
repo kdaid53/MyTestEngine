@@ -3,8 +3,17 @@
   <ItemGroup>
     <ClInclude Include="MyPlayScene.h" />
     <ClInclude Include="MyLoadScenes.h" />
+    <ClInclude Include="MyPlayer.h" />
+    <ClInclude Include="MyTitleScene.h" />
+    <ClInclude Include="MyStaticObject.h" />
+    <ClInclude Include="MyLoadResources.h" />
+    <ClInclude Include="MyPlayerScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyPlayScene.cpp" />
+    <ClCompile Include="MyPlayer.cpp" />
+    <ClCompile Include="MyTitleScene.cpp" />
+    <ClCompile Include="MYStaticObject.cpp" />
+    <ClCompile Include="MyPlayerScript.cpp" />
   </ItemGroup>
 </Project>

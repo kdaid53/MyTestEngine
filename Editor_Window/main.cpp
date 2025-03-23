@@ -4,11 +4,16 @@
 #include "framework.h"
 #include "Editor_Window.h"
 #include "..//MyEngine_Source/MyEnApplication.h"
+#include "..\\MyEngine_Window\\MyLoadResources.h"
 #include "..\\MyEngine_Window\MyLoadScenes.h"
 
 #define MAX_LOADSTRING 100
 
 kim::Application app;
+
+
+ULONG_PTR gpToken;
+Gdiplus::GdiplusStartupInput gpsi;
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
@@ -70,7 +75,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,           // ! 프로그램의 �
 
 
 
-
+    Gdiplus::GdiplusShutdown(gpToken);
 
 
     // 기본 메시지 루프입니다: 사용안함
@@ -129,8 +134,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   const UINT width = 1200;
-   const UINT height = 900;
+   const UINT width = 800;
+   const UINT height = 600;
 
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
@@ -146,9 +151,15 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
+   Gdiplus::GdiplusStartup(&gpToken, &gpsi, NULL);
+
+   //로드 리소스
+   kim::LoadResources();
 
    //로드 씬
    kim::LoadScenes();
+
+   
 
    return TRUE;
 }

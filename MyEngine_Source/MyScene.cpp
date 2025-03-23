@@ -3,8 +3,10 @@
 namespace kim {
 
 	Scene::Scene():
-		sceneGameObjects{}
-	{}
+		sceneLayers{}
+	{
+		CreateLayers();
+	}
 
 	Scene::~Scene()
 	{
@@ -12,33 +14,64 @@ namespace kim {
 
 	void Scene::Initialize()
 	{
+		for (Layer* layer : sceneLayers) {
+			if (layer == nullptr)
+				continue;
+
+			layer->Initialize();
+		}
 
 	}
 
 	void Scene::Update()
 	{
-		for (Gameobject* gameObject : sceneGameObjects) {
-			gameObject->Update();
+		for (Layer* layer : sceneLayers) {
+			if (layer == nullptr)
+				continue;
+
+			layer->Update();
 		}
 	}
 
 	void Scene::LateUpdate()
 	{
-		for (Gameobject* gameObject : sceneGameObjects) {
-			gameObject->LateUpdate();
+		for (Layer* layer : sceneLayers) {
+			if (layer == nullptr)
+				continue;
+
+			layer->LateUpdate();
 		}
 	}
 
 	void Scene::Render(HDC hdc)
 	{
-		for (Gameobject* gameObject : sceneGameObjects) {
-			gameObject->Render(hdc);
+		for (Layer* layer : sceneLayers) {
+			if (layer == nullptr)
+				continue;
+
+			layer->Render(hdc);
 		}
 	}
 
-	void Scene::AddGameObject(Gameobject* gameObject)
+	void Scene::OnLoad()
 	{
-		sceneGameObjects.push_back(gameObject);
+	}
+
+	void Scene::OnExit()
+	{
+	}
+
+	void Scene::CreateLayers()
+	{
+		sceneLayers.resize((UINT)enums::LayerType::Max);
+		for (size_t i = 0; i < (UINT)enums::LayerType::Max; i++)
+			sceneLayers[i] = new Layer();
+		
+	}
+
+	void Scene::AddGameObject(Gameobject* gameObject, const enums::LayerType objectLayer)
+	{
+		sceneLayers[(UINT)objectLayer]->AddGameObject(gameObject);
 	}
 
 

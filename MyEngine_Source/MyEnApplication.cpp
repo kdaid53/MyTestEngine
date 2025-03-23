@@ -48,13 +48,13 @@ namespace kim {
 
 	void Application::LateUpdate(){
 		
-		//SceneManager::Lateupdate();
+		SceneManager::Lateupdate();
 	}
 
 	void Application::Render(){
 		cleatRenderTarget();
 
-		Time::Render(backHdc);
+		//Time::Render(backHdc);
 
 		SceneManager::Render(backHdc);
 

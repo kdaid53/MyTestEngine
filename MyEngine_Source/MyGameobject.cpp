@@ -1,70 +1,77 @@
 #include "MyGameobject.h"
 #include "MyInput.h"
 #include "MyTime.h"
-#include "MyEnApplication.h"
-#include "CommonIncludes.h"
+#include "MyTransform.h"
+
 
 namespace kim {
 
-	Gameobject::Gameobject() :
-		obSpeed(100.0f),
-		obX(0.0f),
-		obY(0.0f)
-	{}
+	Gameobject::Gameobject(){
 
-	Gameobject::~Gameobject(){}
-
-
+		objComponents.resize((UINT)enums::ComponentType::End);
 	
+		initializeTransform();
+	}
+
+	Gameobject::~Gameobject(){
+		for (Component* comp : objComponents) {
+			delete comp;
+			comp = nullptr;
+		}
+	}
+
+	void Gameobject::Initialize()
+	{
+		for (Component* comp : objComponents) {
+			if (comp == nullptr)
+				continue;
+
+			comp->Initialize();
+		}
+	}
 
 	void Gameobject::Update() {
 
-		Move();	
+		for (Component* comp : objComponents) {
+			if (comp == nullptr)
+				continue;
+
+			comp->Update();
+		}
+
+
 
 	}
 
 
 	void Gameobject::LateUpdate() {
 
+		for (Component* comp : objComponents) {
+			if (comp == nullptr)
+				continue;
+
+			comp->LateUpdate();
+		}
+
 	}
 
 
 	void Gameobject::Render(HDC hdc) {
 
-		//HBRUSH newBrush = CreateSolidBrush(RGB(0,0,255));
-		HBRUSH newBrush = CreateSolidBrush(RGB(rand()%255, rand() % 255, rand() % 255));
-		HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, newBrush);
+		for (Component* comp : objComponents) {
+			if (comp == nullptr)
+				continue;
 
-		Rectangle(hdc, obX, obY, 50 + obX, 50 + obY);
-
-		SelectObject(hdc, oldBrush);
-		
-		DeleteObject(newBrush);
+			comp->Render(hdc);
+		}
 
 
+	}
+
+	void Gameobject::initializeTransform()
+	{
+		AddComponent<Transform>();
 	}
 	
-	void Gameobject::Move() {
-
-		if (Input::GetKey(eKeyCode::D)) {
-			obX += obSpeed * Time::DeltaTime();
-		}
-
-		if (Input::GetKey(eKeyCode::A)) {
-			obX -= obSpeed * Time::DeltaTime();
-		}
-
-		if (Input::GetKey(eKeyCode::W)) {
-			obY -= obSpeed * Time::DeltaTime();
-		}
-
-		if (Input::GetKey(eKeyCode::S)) {
-			obY += obSpeed * Time::DeltaTime();
-		}
-
-		
-		
-	}
-
 
 }

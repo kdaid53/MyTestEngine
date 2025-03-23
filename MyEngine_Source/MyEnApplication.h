@@ -14,6 +14,11 @@ namespace kim {
 		void LateUpdate();
 		void Render();
 
+		HDC GetHdc() { return appHdc; }
+
+		UINT GetWidth() { return workWidth; }
+		UINT GetHeight() { return workHeight; }
+
 	private:
 		
 		void cleatRenderTarget();

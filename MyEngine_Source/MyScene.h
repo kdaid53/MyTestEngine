@@ -1,6 +1,7 @@
 #pragma once
 #include "MyEntity.h"
 #include "MyGameobject.h"
+#include "MyLayer.h"
 
 
 namespace kim {
@@ -16,10 +17,15 @@ namespace kim {
 		virtual void LateUpdate();
 		virtual void Render(HDC hdc);
 		
-		void AddGameObject(Gameobject* gameObject);
+		virtual void OnLoad();
+		virtual void OnExit();
+
+		void AddGameObject(Gameobject* gameObject, const enums::LayerType objectLayer);
+		Layer* GetLayer(const enums::LayerType layertype) { return sceneLayers[(UINT)layertype]; }
 
 	private:
-		std::vector<Gameobject*> sceneGameObjects;
+		void CreateLayers();
+		std::vector<Layer*> sceneLayers;
 
 	};
 

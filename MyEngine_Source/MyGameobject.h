@@ -1,5 +1,6 @@
 #pragma once
 #include "CommonIncludes.h"
+#include "MyComponent.h"
 
 namespace kim {
 
@@ -8,31 +9,41 @@ namespace kim {
 	public:
 		Gameobject();
 		~Gameobject();
-
-		void Update();
-		void LateUpdate();
-		void Render(HDC hdc);
 		
-		void SetPosition(float x, float y) {
-			obX = x;
-			obY = y;
+		virtual void Initialize();
+		virtual void Update();
+		virtual void LateUpdate();
+		virtual void Render(HDC hdc);
+
+
+
+		template <typename T>
+		T* AddComponent() {
+			T* comp = new T();
+			comp->Initialize();
+			comp->SetOwner(this);
+			objComponents[(UINT)comp->GetType()] = comp;
+
+			return comp;
 		}
 
-		float GetPositionX() { return obX; }
-		float GetPositionY() { return obY; }
+		template <typename T>
+		T* GetComponent() {
+			T* component = nullptr;
+			for (Component* comp : objComponents) {
+				component = dynamic_cast<T*>(comp);
+				if (component)
+					break;
+			}
+			return component;
+		}
 
-		void Move();
 
 	private:
 
-		float obX;
-		float obY;
-		float obSpeed;
+		std::vector<Component*> objComponents;
 
-	
-		
-
-		
+		void initializeTransform();
 
 	};
 
